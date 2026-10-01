@@ -1,0 +1,13 @@
+# Visual Studio
+.vs/
+**/bin/
+**/obj/
+
+# Archivos temporales de Visual Studio
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Paquetes NuGet
+**/packages/
