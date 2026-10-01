@@ -1,0 +1,28 @@
+type Query {
+    listarCuentas(titular: String, tipoCuenta: String): [CuentaCorriente]
+    buscarCuenta(numeroCuenta: Int!): CuentaCorriente
+}
+
+type Mutation {
+    agregarCuenta(input: CuentaCorrienteInput!): CuentaCorriente
+    eliminarCuenta(numeroCuenta: Int!): Boolean
+    actualizarCuenta(input: CuentaCorrienteInput!): CuentaCorriente
+}
+
+input CuentaCorrienteInput {
+    numeroCuenta: Int!
+    titular: String!
+    fechaApertura: String!
+    saldo: Float!
+    cuotaManejo: Float!
+    tipoCuenta: String!
+}
+
+type CuentaCorriente {
+    numeroCuenta: Int
+    titular: String
+    fechaApertura: String
+    saldo: Float
+    cuotaManejo: Float
+    tipoCuenta: String
+}
