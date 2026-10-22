@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class ProductoFinanciero {
 
-    private int numeroCuenta;
+    private final int numeroCuenta;
     private String titular;
     private LocalDateTime fechaApertura;
     private double saldo;
@@ -25,9 +25,6 @@ public class ProductoFinanciero {
         return numeroCuenta;
     }
 
-    public void setNumeroCuenta(int numeroCuenta) {
-        this.numeroCuenta = numeroCuenta;
-    }
 
     public String getTitular() {
         return titular;
