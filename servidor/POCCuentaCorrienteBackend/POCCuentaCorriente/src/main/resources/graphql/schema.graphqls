@@ -1,12 +1,23 @@
 type Query {
     listarCuentas(titular: String, tipoCuenta: String): [CuentaCorriente]
     buscarCuenta(numeroCuenta: Int!): CuentaCorriente
+
+    # Movimientos
+    listarMovimientos(numeroCuenta: Int, tipoMovimiento: String): [MovimientoBancario!]!
+
+    buscarMovimiento(numeroCuenta: Int!,idMovimiento: Int!): MovimientoBancario
 }
 
 type Mutation {
     agregarCuenta(input: CuentaCorrienteInput!): CuentaCorriente
     eliminarCuenta(numeroCuenta: Int!): Boolean
     actualizarCuenta(input: CuentaCorrienteInput!): CuentaCorriente
+
+    agregarMovimiento(input: MovimientoBancarioInput!): MovimientoBancario
+
+    actualizarMovimiento(input: MovimientoBancarioInput!): MovimientoBancario
+
+    eliminarMovimiento(numeroCuenta: Int!,idMovimiento: Int!): Boolean
 }
 
 input CuentaCorrienteInput {
@@ -25,4 +36,42 @@ type CuentaCorriente {
     saldo: Float
     cuotaManejo: Float
     tipoCuenta: String
+    activa: Boolean!
+    movimientos: [MovimientoBancario!]!
+}
+
+input MovimientoBancarioInput {
+
+    idMovimiento: Int!
+
+    numeroCuenta: Int!
+
+    tipoMovimiento: String!
+
+    monto: Float!
+
+    fechaMovimiento: String!
+
+    descripcion: String!
+
+    confirmado: Boolean!
+
+}
+
+type MovimientoBancario {
+
+    idMovimiento: Int!
+
+    numeroCuenta: Int!
+
+    tipoMovimiento: String!
+
+    monto: Float!
+
+    fechaMovimiento: String!
+
+    descripcion: String
+
+    confirmado: Boolean!
+
 }
