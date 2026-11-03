@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { obtenerCuentas } from "../controllers/CuentaController";
+import { obtenerCuentas } from "../controllers/cuentaController";
 import { suscribir } from "../observer/NotificadorCambios";
 
 export default function PanelObserver() {
