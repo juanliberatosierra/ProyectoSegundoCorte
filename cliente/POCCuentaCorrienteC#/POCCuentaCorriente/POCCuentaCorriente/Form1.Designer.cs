@@ -16,6 +16,14 @@
         private System.Windows.Forms.ToolStripMenuItem eliminarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem actualizarToolStripMenuItem;
 
+
+        private System.Windows.Forms.ToolStripMenuItem movimientoBancarioToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem adicionarMovimientoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem listarMovimientosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem consultarMovimientoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem eliminarMovimientoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem actualizarMovimientoToolStripMenuItem;
+
         private System.Windows.Forms.ToolStripMenuItem ayudaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem acercaDeToolStripMenuItem;
 
@@ -57,6 +65,24 @@
             this.actualizarToolStripMenuItem =
                 new System.Windows.Forms.ToolStripMenuItem();
 
+            this.movimientoBancarioToolStripMenuItem =
+                new System.Windows.Forms.ToolStripMenuItem();
+
+            this.adicionarMovimientoToolStripMenuItem =
+                new System.Windows.Forms.ToolStripMenuItem();
+
+            this.listarMovimientosToolStripMenuItem =
+                new System.Windows.Forms.ToolStripMenuItem();
+
+            this.consultarMovimientoToolStripMenuItem =
+                new System.Windows.Forms.ToolStripMenuItem();
+
+            this.eliminarMovimientoToolStripMenuItem =
+                new System.Windows.Forms.ToolStripMenuItem();
+
+            this.actualizarMovimientoToolStripMenuItem =
+                new System.Windows.Forms.ToolStripMenuItem();
+
             this.ayudaToolStripMenuItem =
                 new System.Windows.Forms.ToolStripMenuItem();
 
@@ -74,6 +100,7 @@
                 {
                     this.archivoToolStripMenuItem,
                     this.cuentaCorrienteToolStripMenuItem,
+                    this.movimientoBancarioToolStripMenuItem,
                     this.ayudaToolStripMenuItem
                 });
 
@@ -223,6 +250,108 @@
             this.actualizarToolStripMenuItem.Click +=
                 new System.EventHandler(
                     this.actualizarToolStripMenuItem_Click);
+
+            // 
+            // Movimiento Bancario
+            // 
+            this.movimientoBancarioToolStripMenuItem.DropDownItems.AddRange(
+                new System.Windows.Forms.ToolStripItem[]
+                {
+                    this.adicionarMovimientoToolStripMenuItem,
+                    this.listarMovimientosToolStripMenuItem,
+                    this.consultarMovimientoToolStripMenuItem,
+                    this.eliminarMovimientoToolStripMenuItem,
+                    this.actualizarMovimientoToolStripMenuItem
+                });
+
+            this.movimientoBancarioToolStripMenuItem.Name =
+                "movimientoBancarioToolStripMenuItem";
+
+            this.movimientoBancarioToolStripMenuItem.Size =
+                new System.Drawing.Size(155, 24);
+
+            this.movimientoBancarioToolStripMenuItem.Text =
+                "Movimiento Bancario";
+
+            // 
+            // Adicionar (movimiento)
+            // 
+            this.adicionarMovimientoToolStripMenuItem.Name =
+                "adicionarMovimientoToolStripMenuItem";
+
+            this.adicionarMovimientoToolStripMenuItem.Size =
+                new System.Drawing.Size(150, 24);
+
+            this.adicionarMovimientoToolStripMenuItem.Text =
+                "Adicionar";
+
+            this.adicionarMovimientoToolStripMenuItem.Click +=
+                new System.EventHandler(
+                    this.adicionarMovimientoToolStripMenuItem_Click);
+
+            // 
+            // Listar (movimiento)
+            // 
+            this.listarMovimientosToolStripMenuItem.Name =
+                "listarMovimientosToolStripMenuItem";
+
+            this.listarMovimientosToolStripMenuItem.Size =
+                new System.Drawing.Size(150, 24);
+
+            this.listarMovimientosToolStripMenuItem.Text =
+                "Listar";
+
+            this.listarMovimientosToolStripMenuItem.Click +=
+                new System.EventHandler(
+                    this.listarMovimientosToolStripMenuItem_Click);
+
+            // 
+            // Consultar (movimiento)
+            // 
+            this.consultarMovimientoToolStripMenuItem.Name =
+                "consultarMovimientoToolStripMenuItem";
+
+            this.consultarMovimientoToolStripMenuItem.Size =
+                new System.Drawing.Size(150, 24);
+
+            this.consultarMovimientoToolStripMenuItem.Text =
+                "Consultar";
+
+            this.consultarMovimientoToolStripMenuItem.Click +=
+                new System.EventHandler(
+                    this.consultarMovimientoToolStripMenuItem_Click);
+
+            // 
+            // Eliminar (movimiento)
+            // 
+            this.eliminarMovimientoToolStripMenuItem.Name =
+                "eliminarMovimientoToolStripMenuItem";
+
+            this.eliminarMovimientoToolStripMenuItem.Size =
+                new System.Drawing.Size(150, 24);
+
+            this.eliminarMovimientoToolStripMenuItem.Text =
+                "Eliminar";
+
+            this.eliminarMovimientoToolStripMenuItem.Click +=
+                new System.EventHandler(
+                    this.eliminarMovimientoToolStripMenuItem_Click);
+
+            // 
+            // Actualizar (movimiento)
+            // 
+            this.actualizarMovimientoToolStripMenuItem.Name =
+                "actualizarMovimientoToolStripMenuItem";
+
+            this.actualizarMovimientoToolStripMenuItem.Size =
+                new System.Drawing.Size(150, 24);
+
+            this.actualizarMovimientoToolStripMenuItem.Text =
+                "Actualizar";
+
+            this.actualizarMovimientoToolStripMenuItem.Click +=
+                new System.EventHandler(
+                    this.actualizarMovimientoToolStripMenuItem_Click);
 
             // 
             // Ayuda
