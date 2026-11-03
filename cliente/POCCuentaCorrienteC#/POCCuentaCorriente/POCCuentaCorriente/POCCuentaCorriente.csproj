@@ -144,6 +144,39 @@
       <DependentUpon>GUIListarCuentas.cs</DependentUpon>
     </Compile>
     <Compile Include="model\ResponseCuentaCorriente.cs" />
+    <Compile Include="GUIActualizarMovimiento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUIActualizarMovimiento.Designer.cs">
+      <DependentUpon>GUIActualizarMovimiento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUIAgregarMovimiento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUIAgregarMovimiento.Designer.cs">
+      <DependentUpon>GUIAgregarMovimiento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUIConsultarMovimiento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUIConsultarMovimiento.Designer.cs">
+      <DependentUpon>GUIConsultarMovimiento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUIEliminarMovimiento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUIEliminarMovimiento.Designer.cs">
+      <DependentUpon>GUIEliminarMovimiento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUIListarMovimientos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUIListarMovimientos.Designer.cs">
+      <DependentUpon>GUIListarMovimientos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="model\ResponseMovimientoBancario.cs" />
+    <Compile Include="servicios\ServicioMovimientoBancario.cs" />
+    <Compile Include="servicios\ValidacionesMovimiento.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">

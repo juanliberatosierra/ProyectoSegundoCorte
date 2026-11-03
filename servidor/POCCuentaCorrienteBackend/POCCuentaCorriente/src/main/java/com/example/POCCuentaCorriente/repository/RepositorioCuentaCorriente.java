@@ -11,7 +11,11 @@ public interface RepositorioCuentaCorriente {
 
     Optional<CuentaCorriente> buscarPorNumeroCuenta(int numeroCuenta);
 
+    List<CuentaCorriente> listarConFiltros(String titular, String tipoCuenta);
+
     void guardar(CuentaCorriente cuenta);
+
+    void actualizar(CuentaCorriente cuenta);
 
     boolean eliminar(CuentaCorriente cuenta);
 

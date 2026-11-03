@@ -1,9 +1,12 @@
 package com.example.POCCuentaCorriente.model;
 
+import org.springframework.data.annotation.Id;
+
 import java.time.LocalDateTime;
 
 public class ProductoFinanciero {
 
+    @Id
     private final int numeroCuenta;
     private String titular;
     private LocalDateTime fechaApertura;
