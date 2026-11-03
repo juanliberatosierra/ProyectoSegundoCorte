@@ -143,6 +143,8 @@ export default function ListarMovimientos() {
                                 <tr>
                                     <th>ID</th>
                                     <th>Cuenta</th>
+                                    <th>Titular</th>
+                                    <th>Tipo de cuenta</th>
                                     <th>Tipo</th>
                                     <th>Monto</th>
                                     <th>Fecha</th>
@@ -161,6 +163,10 @@ export default function ListarMovimientos() {
                                         <td>{movimiento.idMovimiento}</td>
 
                                         <td>{movimiento.numeroCuenta}</td>
+
+                                        <td>{movimiento.titularCuenta}</td>
+
+                                        <td>{movimiento.tipoCuenta}</td>
 
                                         <td>{movimiento.tipoMovimiento}</td>
 

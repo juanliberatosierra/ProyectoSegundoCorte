@@ -50,14 +50,16 @@ export async function buscarMovimiento(numeroCuenta, idMovimiento) {
     return resultado.buscarMovimiento;
 }
 
+// Usa la consulta personalizada del backend: trae cada movimiento
+// junto con 2 atributos de su cuenta (titularCuenta y tipoCuenta).
 export async function listarMovimientos(numeroCuenta, tipoMovimiento) {
 
     const query = `
-        query ListarMovimientos(
+        query ListarMovimientosConCuenta(
             $numeroCuenta: Int
             $tipoMovimiento: String
         ) {
-            listarMovimientos(
+            listarMovimientosConCuenta(
                 numeroCuenta: $numeroCuenta
                 tipoMovimiento: $tipoMovimiento
             ) {
@@ -68,6 +70,8 @@ export async function listarMovimientos(numeroCuenta, tipoMovimiento) {
                 fechaMovimiento
                 descripcion
                 confirmado
+                titularCuenta
+                tipoCuenta
             }
         }
     `;
@@ -77,7 +81,7 @@ export async function listarMovimientos(numeroCuenta, tipoMovimiento) {
         tipoMovimiento: tipoMovimiento
     });
 
-    return resultado.listarMovimientos;
+    return resultado.listarMovimientosConCuenta;
 }
 
 export async function actualizarMovimiento(movimiento) {
