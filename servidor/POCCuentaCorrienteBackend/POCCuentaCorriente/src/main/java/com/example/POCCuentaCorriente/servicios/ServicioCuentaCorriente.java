@@ -5,6 +5,7 @@ import com.example.POCCuentaCorriente.model.CuentaCorrienteInput;
 import com.example.POCCuentaCorriente.builder.CuentaCorrienteBuilder;
 import com.example.POCCuentaCorriente.repository.RepositorioCuentaCorriente;
 import com.example.POCCuentaCorriente.observer.NotificadorCambios;
+import com.example.POCCuentaCorriente.repository.RepositorioMovimientoBancario;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,6 +22,7 @@ public class ServicioCuentaCorriente {
 
 
     private final RepositorioCuentaCorriente repositorio;
+    private final RepositorioMovimientoBancario repositorioMovimientos;
     private final NotificadorCambios notificador;
 
 
@@ -29,9 +31,11 @@ public class ServicioCuentaCorriente {
 
     public ServicioCuentaCorriente(
             RepositorioCuentaCorriente repositorio,
+            RepositorioMovimientoBancario repositorioMovimientos,
             NotificadorCambios notificador) {
 
         this.repositorio = repositorio;
+        this.repositorioMovimientos = repositorioMovimientos;
         this.notificador = notificador;
     }
 
@@ -44,36 +48,9 @@ public class ServicioCuentaCorriente {
             String titular,
             String tipoCuenta) {
 
-        String filtroTitular = titular == null
-                ? ""
-                : titular.trim().toLowerCase(Locale.ROOT);
-
-        String filtroTipo = tipoCuenta == null
-                ? ""
-                : tipoCuenta.trim();
-
-        return repositorio.listar()
-                .stream()
-
-                // Filtrar por titular
-                .filter(cuenta ->
-                        filtroTitular.isEmpty()
-                                || cuenta.getTitular()
-                                .toLowerCase(Locale.ROOT)
-                                .contains(filtroTitular)
-                )
-
-                // Filtrar por tipo de cuenta
-                .filter(cuenta ->
-                        filtroTipo.isEmpty()
-                                || filtroTipo.equalsIgnoreCase("Todos")
-                                || cuenta.getTipoCuenta()
-                                .equalsIgnoreCase(filtroTipo)
-                )
-
-                .toList();
+        // Ahora el filtro lo hace MongoDB
+        return repositorio.listarConFiltros(titular, tipoCuenta);
     }
-
 
 
     //  BUSCAR CUENTA POR NUMERO
@@ -144,6 +121,10 @@ public class ServicioCuentaCorriente {
         boolean eliminado = repositorio.eliminar(cuentaEncontrada.get());
 
         if (eliminado) {
+            repositorioMovimientos.eliminarPorCuenta(numeroCuenta);
+        }
+
+        if (eliminado) {
             notificador.notificar(
                     "CuentaCorriente",
                     "ELIMINAR",
@@ -179,13 +160,11 @@ public class ServicioCuentaCorriente {
             return Optional.empty();
         }
 
-        // Validar antes de modificar
+
         LocalDateTime fecha = validarYObtenerFecha(input);
 
-        // Obtener objeto encontrado
         CuentaCorriente cuenta = cuentaEncontrada.get();
 
-        // Actualizar atributos
         cuenta.setTitular(input.titular().trim());
 
         cuenta.setFechaApertura(fecha);
@@ -196,13 +175,15 @@ public class ServicioCuentaCorriente {
 
         cuenta.setTipoCuenta(input.tipoCuenta().trim());
 
+        repositorio.actualizar(cuenta);
+
         notificador.notificar(
                 "CuentaCorriente",
                 "ACTUALIZAR",
                 String.valueOf(cuenta.getNumeroCuenta())
         );
 
-        // Devuelve cuenta actualizada
+
         return Optional.of(cuenta);
     }
 

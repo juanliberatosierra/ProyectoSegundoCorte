@@ -1,7 +1,9 @@
 package com.example.POCCuentaCorriente.controller;
 
+import com.example.POCCuentaCorriente.model.CuentaCorriente;
 import com.example.POCCuentaCorriente.model.MovimientoBancario;
 import com.example.POCCuentaCorriente.model.MovimientoBancarioInput;
+import com.example.POCCuentaCorriente.model.MovimientoDetalle;
 
 import com.example.POCCuentaCorriente.servicios.ServicioMovimientoBancario;
 
@@ -11,6 +13,7 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.graphql.data.method.annotation.SchemaMapping;
 
 @Controller
 public class MovimientoBancarioController {
@@ -77,4 +80,23 @@ public class MovimientoBancarioController {
 
 
 
+    @QueryMapping
+    public List<MovimientoDetalle> listarMovimientosConCuenta(
+            @Argument("numeroCuenta") Integer numeroCuenta,
+            @Argument("tipoMovimiento") String tipoMovimiento) {
+
+        return servicioMovimientoBancario.listarMovimientosConCuenta(
+                numeroCuenta,
+                tipoMovimiento
+        );
+    }
+
+    // Resuelve el campo "movimientos" del tipo CuentaCorriente del schema.
+    @SchemaMapping(typeName = "CuentaCorriente", field = "movimientos")
+    public List<MovimientoBancario> movimientos(CuentaCorriente cuenta) {
+
+        return servicioMovimientoBancario.movimientosDeCuenta(
+                cuenta.getNumeroCuenta()
+        );
+    }
 }
