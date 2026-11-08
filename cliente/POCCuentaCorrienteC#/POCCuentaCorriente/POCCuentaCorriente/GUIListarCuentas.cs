@@ -13,6 +13,7 @@ namespace POCCuentaCorriente
         public GUIListarCuentas()
         {
             InitializeComponent();
+            Estilo.Aplicar(this, "Consulte y filtre las cuentas registradas");
         }
 
         private async Task listarCuentas()

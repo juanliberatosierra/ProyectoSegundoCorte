@@ -13,6 +13,7 @@ namespace POCCuentaCorriente
         public GUIEliminarCuenta()
         {
             InitializeComponent();
+            Estilo.Aplicar(this, "Busque la cuenta y confirme su eliminación");
         }
 
         private async void btnBuscar_Click(object sender, EventArgs e)

@@ -162,7 +162,9 @@ export default function ListarMovimientos() {
                                     >
                                         <td>{movimiento.idMovimiento}</td>
 
-                                        <td>{movimiento.numeroCuenta}</td>                        
+                                        <td>{movimiento.numeroCuenta}</td>
+
+                                    
 
                                         <td>{movimiento.tipoMovimiento}</td>
 
