@@ -1,0 +1,285 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f6f9;
+    color: #263238;
+}
+
+.app-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background: #152238;
+    color: white;
+    padding: 25px 15px;
+    flex-shrink: 0;
+}
+
+.sidebar-logo {
+    font-size: 21px;
+    margin-bottom: 35px;
+    padding: 0 10px;
+}
+
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar h3 {
+    font-size: 12px;
+    color: #8fa7c6;
+    text-transform: uppercase;
+    margin: 25px 10px 10px;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #dce5f0;
+    padding: 11px 15px;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-bottom: 3px;
+}
+
+.sidebar a:hover {
+    background: #263c5b;
+}
+
+.sidebar a.active {
+    background: #2563eb;
+    color: white;
+}
+
+.contenido {
+    flex: 1;
+    min-width: 0;
+    padding: 35px;
+}
+
+.pagina h1 {
+    margin-top: 0;
+    color: #152238;
+}
+
+.tarjeta {
+    background: white;
+    padding: 24px;
+    border-radius: 10px;
+    margin-top: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+button {
+    background: #2563eb;
+    border: none;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    background: white;
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    text-align: left;
+}
+
+th {
+    background: #edf2f7;
+}
+
+@media (max-width: 768px) {
+    .app-layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+    }
+
+    .contenido {
+        padding: 20px;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    
+}
+
+.formulario-contenedor {
+    max-width: 600px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+}
+
+.campo label {
+    font-weight: 600;
+    margin-bottom: 7px;
+}
+
+.campo input,
+.campo select {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 15px;
+    background: white;
+}
+
+.campo input:focus,
+.campo select:focus {
+    outline: none;
+    border-color: #2563eb;
+}
+
+.formulario-contenedor button {
+    width: 100%;
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+.formulario-contenedor button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.mensaje-exito {
+    background: #dcfce7;
+    color: #166534;
+    padding: 12px;
+    border-radius: 6px;
+    margin-top: 20px;
+}
+
+.mensaje-error {
+    background: #fee2e2;
+    color: #991b1b;
+    padding: 12px;
+    border-radius: 6px;
+    margin-top: 20px;
+}
+
+.detalle-cuenta {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px 25px;
+    margin-bottom: 25px;
+}
+
+.detalle-cuenta p {
+    background: #f8fafc;
+    padding: 14px;
+    border-radius: 6px;
+    margin: 0;
+}
+
+.detalle-cuenta strong {
+    color: #334155;
+}
+
+@media (max-width: 768px) {
+    .detalle-cuenta {
+        grid-template-columns: 1fr;
+    }
+}
+
+.advertencia-eliminar {
+    margin-top: 25px;
+    padding: 18px;
+    background: #fff7ed;
+    border: 1px solid #fdba74;
+    border-radius: 8px;
+    color: #9a3412;
+}
+
+.advertencia-eliminar p {
+    margin-bottom: 5px;
+}
+
+.btn-eliminar {
+    background: #dc2626;
+    margin-top: 20px;
+    padding: 12px 25px;
+    font-weight: 600;
+}
+
+.btn-eliminar:hover {
+    background: #b91c1c;
+}
+
+.btn-eliminar:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.campo input[type="checkbox"] {
+    width: auto;
+    margin-right: 8px;
+    accent-color: #2563eb;
+}
+
+.filtros-movimientos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 700px;
+}
+
+@media (max-width: 768px) {
+    .filtros-movimientos {
+        grid-template-columns: 1fr;
+    }
+}
+
+.panel-observer {
+    margin-top: 35px;
+    border-left: 5px solid #2563eb;
+}
+
+.panel-observer h3 {
+    color: #1e40af;
+    margin-top: 0;
+}
+
+.observer-estado {
+    background: #eff6ff;
+    color: #1d4ed8;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.panel-observer table {
+    margin-top: 15px;
+}
+
+.panel-observer th {
+    background: #dbeafe;
+}
