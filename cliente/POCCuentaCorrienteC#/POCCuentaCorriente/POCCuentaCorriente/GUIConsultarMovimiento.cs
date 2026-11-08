@@ -14,6 +14,7 @@ namespace POCCuentaCorriente
         public GUIConsultarMovimiento()
         {
             InitializeComponent();
+            Estilo.Aplicar(this, "Busque un movimiento por cuenta e ID");
         }
 
         private async void btnBuscar_Click(object sender, EventArgs e)

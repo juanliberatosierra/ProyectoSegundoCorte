@@ -13,6 +13,7 @@ namespace POCCuentaCorriente
         public GUIActualizarCuenta()
         {
             InitializeComponent();
+            Estilo.Aplicar(this, "Busque la cuenta y modifique sus datos");
         }
 
         private async void btnBuscar_Click(object sender, EventArgs e)

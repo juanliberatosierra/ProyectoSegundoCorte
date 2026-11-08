@@ -18,6 +18,7 @@ namespace POCCuentaCorriente
         public GUIEliminarMovimiento()
         {
             InitializeComponent();
+            Estilo.Aplicar(this, "Busque el movimiento y confirme su eliminación");
         }
 
         private async void btnBuscar_Click(object sender, EventArgs e)

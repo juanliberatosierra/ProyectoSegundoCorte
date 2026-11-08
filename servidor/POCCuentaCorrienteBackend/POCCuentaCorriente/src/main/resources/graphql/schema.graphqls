@@ -5,6 +5,8 @@ type Query {
     # Movimientos
     listarMovimientos(numeroCuenta: Int, tipoMovimiento: String): [MovimientoBancario!]!
 
+    listarMovimientosConCuenta(numeroCuenta: Int, tipoMovimiento: String): [MovimientoDetalle!]!
+
     buscarMovimiento(numeroCuenta: Int!,idMovimiento: Int!): MovimientoBancario
 }
 
@@ -74,4 +76,16 @@ type MovimientoBancario {
 
     confirmado: Boolean!
 
+}
+
+type MovimientoDetalle {
+    idMovimiento: Int!
+    numeroCuenta: Int!
+    tipoMovimiento: String!
+    monto: Float!
+    fechaMovimiento: String!
+    descripcion: String
+    confirmado: Boolean!
+    titularCuenta: String
+    tipoCuenta: String
 }

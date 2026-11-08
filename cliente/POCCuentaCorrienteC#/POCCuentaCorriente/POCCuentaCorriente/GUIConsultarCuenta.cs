@@ -13,6 +13,7 @@ namespace POCCuentaCorriente
         public GUIConsultarCuenta()
         {
             InitializeComponent();
+            Estilo.Aplicar(this, "Busque una cuenta por su número");
         }
 
         private async void btnConsultar_Click(object sender, EventArgs e)

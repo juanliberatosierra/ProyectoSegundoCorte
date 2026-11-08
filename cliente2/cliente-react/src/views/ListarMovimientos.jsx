@@ -143,13 +143,13 @@ export default function ListarMovimientos() {
                                 <tr>
                                     <th>ID</th>
                                     <th>Cuenta</th>
-                                    <th>Titular</th>
-                                    <th>Tipo de cuenta</th>
                                     <th>Tipo</th>
                                     <th>Monto</th>
                                     <th>Fecha</th>
                                     <th>Descripción</th>
                                     <th>Confirmado</th>
+                                    <th>Titular</th>
+                                    <th>Tipo de cuenta</th>
                                 </tr>
                             </thead>
 
@@ -164,9 +164,7 @@ export default function ListarMovimientos() {
 
                                         <td>{movimiento.numeroCuenta}</td>
 
-                                        <td>{movimiento.titularCuenta}</td>
-
-                                        <td>{movimiento.tipoCuenta}</td>
+                                    
 
                                         <td>{movimiento.tipoMovimiento}</td>
 
@@ -181,6 +179,10 @@ export default function ListarMovimientos() {
                                         <td>
                                             {movimiento.confirmado ? "Sí" : "No"}
                                         </td>
+
+                                        <td>{movimiento.titularCuenta}</td>
+
+                                        <td>{movimiento.tipoCuenta}</td>
                                     </tr>
 
                                 ))}

@@ -15,6 +15,7 @@ namespace POCCuentaCorriente
         {
             InitializeComponent();
             limpiarFormulario();
+            Estilo.Aplicar(this, "Registre un depósito o retiro");
         }
 
         private async void btnGuardar_Click(object sender, EventArgs e)

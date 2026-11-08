@@ -16,6 +16,7 @@ namespace POCCuentaCorriente
         public GUIListarMovimientos()
         {
             InitializeComponent();
+            Estilo.Aplicar(this, "Consulte y filtre los movimientos registrados");
         }
 
         private async void GUIListarMovimientos_Load(object sender, EventArgs e)

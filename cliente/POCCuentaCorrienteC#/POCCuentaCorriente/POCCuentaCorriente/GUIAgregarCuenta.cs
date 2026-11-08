@@ -13,6 +13,7 @@ namespace POCCuentaCorriente
         public GUIAgregarCuenta()
         {
             InitializeComponent();
+            Estilo.Aplicar(this, "Complete los datos de la nueva cuenta");
         }
 
         private async void button1_Click(object sender, EventArgs e)

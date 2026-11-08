@@ -50,8 +50,6 @@ export async function buscarMovimiento(numeroCuenta, idMovimiento) {
     return resultado.buscarMovimiento;
 }
 
-// Usa la consulta personalizada del backend: trae cada movimiento
-// junto con 2 atributos de su cuenta (titularCuenta y tipoCuenta).
 export async function listarMovimientos(numeroCuenta, tipoMovimiento) {
 
     const query = `
