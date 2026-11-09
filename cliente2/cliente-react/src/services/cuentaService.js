@@ -1,10 +1,10 @@
 import { ejecutarGraphQL } from "./graphqlService";
 
-export async function listarCuentas() {
+export async function listarCuentas(titular = null, tipoCuenta = null) {
 
     const query = `
-        query {
-            listarCuentas {
+        query ListarCuentas($titular: String, $tipoCuenta: String) {
+            listarCuentas(titular: $titular, tipoCuenta: $tipoCuenta) {
                 numeroCuenta
                 titular
                 saldo
@@ -15,7 +15,10 @@ export async function listarCuentas() {
         }
     `;
 
-    const resultado = await ejecutarGraphQL(query);
+    const resultado = await ejecutarGraphQL(query, {
+        titular: titular,
+        tipoCuenta: tipoCuenta
+    });
 
     return resultado.listarCuentas;
 }

@@ -32,7 +32,13 @@ function App() {
 
                         <Route
                             path="/"
-                            element={<Inicio />}
+                            element={
+                                <>
+                                    <Inicio />
+                                    {/* El panel Observer solo se muestra en Inicio */}
+                                    <PanelObserver />
+                                </>
+                            }
                         />
 
                         <Route
@@ -91,8 +97,6 @@ function App() {
                         />
 
                     </Routes>
-
-                    <PanelObserver />
 
                 </main>
 

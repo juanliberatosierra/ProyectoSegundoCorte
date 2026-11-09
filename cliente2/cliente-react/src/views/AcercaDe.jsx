@@ -9,7 +9,7 @@ export default function AcercaDe() {
 
                 <h3>Sistema de Gestión Bancaria</h3>
 
-                <p>Versión: 1.0.0</p>
+                <p>Versión: 3.0.0</p>
 
                 <p>
                     Proyecto académico de Diseño de Soluciones.
@@ -22,7 +22,7 @@ export default function AcercaDe() {
                 <p>
                     Javier Andres Carvajal Gomez
                     Karla Lizeth Lautero 
-                    Juan Camilo
+                    Juan Camilo Liberato
                 </p>
 
                 <h3>Tecnologías</h3>

@@ -42,13 +42,14 @@ export default function AgregarCuenta() {
                 titular: formulario.titular.trim(),
                 fechaApertura: formulario.fechaApertura,
                 saldo: Number(formulario.saldo),
-                cuotaManejo: Number(formulario.cuotaManejo),
+                cuotaManejo: formulario.cuotaManejo === ""
+                    ? null
+                    : Number(formulario.cuotaManejo),
                 tipoCuenta: formulario.tipoCuenta
             };
 
             if (!formulario.numeroCuenta ||
                     !formulario.saldo ||
-                    !formulario.cuotaManejo ||
                     !formulario.fechaApertura) {
 
                 throw new Error("Completa todos los campos obligatorios");
@@ -134,7 +135,7 @@ export default function AgregarCuenta() {
                     </div>
 
                     <div className="campo">
-                        <label>Cuota de manejo</label>
+                        <label>Cuota de manejo (opcional)</label>
 
                         <input
                             type="number"

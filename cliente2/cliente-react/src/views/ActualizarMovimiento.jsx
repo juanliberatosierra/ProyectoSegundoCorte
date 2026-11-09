@@ -237,7 +237,7 @@ export default function ActualizarMovimiento() {
                         </div>
 
                         <div className="campo">
-                            <label>Descripción</label>
+                            <label>Descripción (opcional)</label>
 
                             <input
                                 type="text"

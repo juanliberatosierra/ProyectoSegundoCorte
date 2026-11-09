@@ -31,10 +31,7 @@ export async function registrarMovimiento(datos) {
         throw new Error("La fecha del movimiento es obligatoria");
     }
 
-    if (!datos.descripcion || !datos.descripcion.trim()) {
-
-        throw new Error("La descripción es obligatoria");
-    }
+    // La descripción es opcional: no se valida
 
     const movimiento = await movimientoService.agregarMovimiento(datos);
 
@@ -111,9 +108,7 @@ export async function modificarMovimiento(datos) {
         throw new Error("La fecha es obligatoria");
     }
 
-    if (!datos.descripcion || !datos.descripcion.trim()) {
-        throw new Error("La descripción es obligatoria");
-    }
+    // La descripción es opcional: no se valida
 
     const movimiento = await movimientoService.actualizarMovimiento(datos);
 

@@ -2,9 +2,21 @@ import * as cuentaService from "../services/cuentaService";
 import { notificar } from "../observer/NotificadorCambios";
 
 
-export async function obtenerCuentas() {
+// Filtros opcionales por si llegan vacíos se listan todas las cuentas
+export async function obtenerCuentas(titular = "", tipoCuenta = "") {
 
-    return await cuentaService.listarCuentas();
+    const filtroTitular = titular && titular.trim()
+        ? titular.trim()
+        : null;
+
+    const filtroTipo = tipoCuenta
+        ? tipoCuenta
+        : null;
+
+    return await cuentaService.listarCuentas(
+        filtroTitular,
+        filtroTipo
+    );
 
 }
 
@@ -26,13 +38,14 @@ export async function registrarCuenta(datos) {
         throw new Error("El saldo no puede ser negativo");
     }
 
-    if (!Number.isFinite(datos.cuotaManejo)
-        || datos.cuotaManejo < 0) {
+    // La cuota de manejo es opcional: si viene vacía (null) no se valida
+    if (datos.cuotaManejo !== null
+        && (!Number.isFinite(datos.cuotaManejo) || datos.cuotaManejo < 0)) {
 
         throw new Error("La cuota de manejo no puede ser negativa");
     }
 
-    if (datos.cuotaManejo > datos.saldo) {
+    if (datos.cuotaManejo !== null && datos.cuotaManejo > datos.saldo) {
 
         throw new Error("La cuota de manejo no puede superar el saldo");
     }
@@ -83,11 +96,13 @@ export async function modificarCuenta(datos) {
         throw new Error("El saldo no puede ser negativo");
     }
 
-    if (!Number.isFinite(datos.cuotaManejo) || datos.cuotaManejo < 0) {
+    // La cuota de manejo es opcional: si viene vacía (null) no se valida
+    if (datos.cuotaManejo !== null
+        && (!Number.isFinite(datos.cuotaManejo) || datos.cuotaManejo < 0)) {
         throw new Error("La cuota de manejo no puede ser negativa");
     }
 
-    if (datos.cuotaManejo > datos.saldo) {
+    if (datos.cuotaManejo !== null && datos.cuotaManejo > datos.saldo) {
         throw new Error("La cuota de manejo no puede superar el saldo");
     }
 

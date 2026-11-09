@@ -41,8 +41,7 @@ export default function AgregarMovimiento() {
             if (!formulario.numeroCuenta ||
                     !formulario.idMovimiento ||
                     !formulario.monto ||
-                    !formulario.fechaMovimiento ||
-                    !formulario.descripcion.trim()) {
+                    !formulario.fechaMovimiento) {
 
                 throw new Error("Complete todos los campos obligatorios");
             }
@@ -157,7 +156,7 @@ export default function AgregarMovimiento() {
                     </div>
 
                     <div className="campo">
-                        <label>Descripción</label>
+                        <label>Descripción (opcional)</label>
 
                         <input
                             type="text"

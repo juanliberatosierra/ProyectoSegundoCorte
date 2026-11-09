@@ -69,8 +69,8 @@ export default function ActualizarCuenta() {
 
         try {
 
-            if (!formulario.saldo || !formulario.cuotaManejo) {
-                throw new Error("Completa los valores de saldo y cuota");
+            if (!formulario.saldo) {
+                throw new Error("Completa el valor del saldo");
             }
 
             const datos = {
@@ -78,7 +78,9 @@ export default function ActualizarCuenta() {
                 titular: formulario.titular.trim(),
                 fechaApertura: formulario.fechaApertura,
                 saldo: Number(formulario.saldo),
-                cuotaManejo: Number(formulario.cuotaManejo),
+                cuotaManejo: formulario.cuotaManejo === ""
+                    ? null
+                    : Number(formulario.cuotaManejo),
                 tipoCuenta: formulario.tipoCuenta
             };
 
@@ -203,7 +205,7 @@ export default function ActualizarCuenta() {
                         </div>
 
                         <div className="campo">
-                            <label>Cuota de manejo</label>
+                            <label>Cuota de manejo (opcional)</label>
 
                             <input
                                 type="number"
