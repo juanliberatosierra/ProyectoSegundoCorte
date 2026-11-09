@@ -27,7 +27,7 @@ input CuentaCorrienteInput {
     titular: String!
     fechaApertura: String!
     saldo: Float!
-    cuotaManejo: Float!
+    cuotaManejo: Float
     tipoCuenta: String!
 }
 
@@ -54,7 +54,7 @@ input MovimientoBancarioInput {
 
     fechaMovimiento: String!
 
-    descripcion: String!
+    descripcion: String
 
     confirmado: Boolean!
 

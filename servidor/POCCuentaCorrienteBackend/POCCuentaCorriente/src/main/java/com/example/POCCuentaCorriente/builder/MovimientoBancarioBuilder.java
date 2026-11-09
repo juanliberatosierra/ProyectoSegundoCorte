@@ -115,13 +115,11 @@ public class MovimientoBancarioBuilder {
             );
         }
 
-        // Validar descripcion
-        if (descripcion == null || descripcion.isBlank()) {
-
-            throw new IllegalArgumentException(
-                    "La descripcion es obligatoria"
-            );
-        }
+        // La descripcion es opcional, si llega vacia se guarda como null
+        String descripcionFinal =
+                (descripcion == null || descripcion.isBlank())
+                        ? null
+                        : descripcion.trim();
 
         // Crear objeto
         MovimientoBancario movimiento = new MovimientoBancario(
@@ -130,7 +128,7 @@ public class MovimientoBancarioBuilder {
                 tipoMovimiento.toUpperCase(),
                 monto,
                 fechaMovimiento,
-                descripcion.trim()
+                descripcionFinal
         );
 
         movimiento.setConfirmado(confirmado);
