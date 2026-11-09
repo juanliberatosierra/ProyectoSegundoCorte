@@ -3,11 +3,6 @@ using System.Globalization;
 
 namespace POCCuentaCorriente.servicios
 {
-    /// <summary>
-    /// Validaciones de los datos que el usuario escribe en las ventanas de
-    /// movimientos. Si un dato es inválido lanzan ArgumentException con un
-    /// mensaje para mostrar al usuario.
-    /// </summary>
     public static class ValidacionesMovimiento
     {
         public static int LeerEnteroPositivo(string texto, string nombreCampo)
@@ -97,11 +92,12 @@ namespace POCCuentaCorriente.servicios
 
         public static string LeerDescripcion(string texto)
         {
+            // La descripción es opcional: si está vacía se envía null
             string descripcion = (texto ?? "").Trim();
 
             if (descripcion.Length == 0)
             {
-                throw new ArgumentException("La descripción es obligatoria.");
+                return null;
             }
 
             if (descripcion.Length > 200)

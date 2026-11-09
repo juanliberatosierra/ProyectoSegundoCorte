@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using GraphQL;
-using GraphQL.Client.Http;
-using GraphQL.Client.Serializer.SystemTextJson;
 using POCCuentaCorriente.model;
+using POCCuentaCorriente.servicios;
 
 namespace POCCuentaCorriente
 {
@@ -20,57 +18,18 @@ namespace POCCuentaCorriente
         {
             try
             {
-                var client = new GraphQLHttpClient(
-                    "http://localhost:8081/graphql",
-                    new SystemTextJsonSerializer());
+                CuentaCorrienteData[] cuentas;
 
-                var request = new GraphQLRequest
+                using (var servicio = new ServicioCuentaCorriente())
                 {
-                    Query = @"
-                        query listarCuentas(
-                            $titular: String,
-                            $tipoCuenta: String
-                        ) {
-                            listarCuentas(
-                                titular: $titular,
-                                tipoCuenta: $tipoCuenta
-                            ) {
-                                numeroCuenta
-                                titular
-                                fechaApertura
-                                saldo
-                                cuotaManejo
-                                tipoCuenta
-                            }
-                        }
-                    ",
-                    Variables = new
-                    {
-                        titular = txtTitular.Text,
-                        tipoCuenta = cmbTipoCuenta.Text
-                    }
-                };
-
-                var response =
-                    await client.SendQueryAsync<ListarCuentasResponse>(request);
-
-                if (response.Errors != null &&
-                    response.Errors.Length > 0)
-                {
-                    MessageBox.Show(
-                        response.Errors[0].Message,
-                        "Error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-
-                    return;
+                    cuentas = await servicio.ListarAsync(
+                        txtTitular.Text,
+                        cmbTipoCuenta.Text);
                 }
 
                 dgvCuentas.Rows.Clear();
 
-                if (response.Data == null ||
-                    response.Data.listarCuentas == null ||
-                    response.Data.listarCuentas.Length == 0)
+                if (cuentas.Length == 0)
                 {
                     MessageBox.Show(
                         "No se encontraron cuentas con los filtros seleccionados.",
@@ -81,7 +40,7 @@ namespace POCCuentaCorriente
                     return;
                 }
 
-                foreach (var cuenta in response.Data.listarCuentas)
+                foreach (var cuenta in cuentas)
                 {
                     dgvCuentas.Rows.Add(
                         cuenta.numeroCuenta,
@@ -92,6 +51,14 @@ namespace POCCuentaCorriente
                         cuenta.tipoCuenta
                     );
                 }
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show(
+                    ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {

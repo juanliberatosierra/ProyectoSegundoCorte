@@ -55,7 +55,7 @@ namespace POCCuentaCorriente.model
         public double saldo { get; set; }
 
         [JsonPropertyName("cuotaManejo")]
-        public double cuotaManejo { get; set; }
+        public double? cuotaManejo { get; set; }
 
         [JsonPropertyName("tipoCuenta")]
         public string tipoCuenta { get; set; }

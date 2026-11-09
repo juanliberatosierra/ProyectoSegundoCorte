@@ -1,19 +1,29 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using GraphQL;
-using GraphQL.Client.Http;
-using GraphQL.Client.Serializer.SystemTextJson;
 using POCCuentaCorriente.model;
+using POCCuentaCorriente.servicios;
 
 namespace POCCuentaCorriente
 {
     public partial class GUIActualizarCuenta : Form
     {
+        private int? cuentaBuscada = null;
+
         public GUIActualizarCuenta()
         {
             InitializeComponent();
             Estilo.Aplicar(this, "Busque la cuenta y modifique sus datos");
+
+            // Solo se puede actualizar después de buscar la cuenta
+            btnActualizar.Enabled = false;
+
+            // Si cambian el número después de buscar, hay que volver a buscar
+            txtNumeroCuenta.TextChanged += (s, e) =>
+            {
+                cuentaBuscada = null;
+                btnActualizar.Enabled = false;
+            };
         }
 
         private async void btnBuscar_Click(object sender, EventArgs e)
@@ -32,46 +42,14 @@ namespace POCCuentaCorriente
             {
                 int numeroCuenta = int.Parse(txtNumeroCuenta.Text);
 
-                var client = new GraphQLHttpClient(
-                    "http://localhost:8081/graphql",
-                    new SystemTextJsonSerializer());
+                CuentaCorrienteData cuenta;
 
-                var request = new GraphQLRequest
+                using (var servicio = new ServicioCuentaCorriente())
                 {
-                    Query = @"
-                        query buscarCuenta($numeroCuenta: Int!) {
-                            buscarCuenta(numeroCuenta: $numeroCuenta) {
-                                numeroCuenta
-                                titular
-                                fechaApertura
-                                saldo
-                                cuotaManejo
-                                tipoCuenta
-                            }
-                        }
-                    ",
-                    Variables = new
-                    {
-                        numeroCuenta = numeroCuenta
-                    }
-                };
-
-                var response =
-                    await client.SendQueryAsync<ResponseCuentaCorriente>(request);
-
-                if (response.Errors != null && response.Errors.Length > 0)
-                {
-                    MessageBox.Show(
-                        response.Errors[0].Message,
-                        "Error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-
-                    return;
+                    cuenta = await servicio.BuscarAsync(numeroCuenta);
                 }
 
-                if (response.Data == null ||
-                    response.Data.cuenta == null)
+                if (cuenta == null)
                 {
                     MessageBox.Show(
                         "No se encontró una cuenta con ese número.",
@@ -79,16 +57,20 @@ namespace POCCuentaCorriente
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Information);
 
+                    cuentaBuscada = null;
+                    btnActualizar.Enabled = false;
+
                     return;
                 }
-
-                var cuenta = response.Data.cuenta;
 
                 txtTitular.Text = cuenta.titular;
                 txtFechaApertura.Text = cuenta.fechaApertura;
                 txtSaldo.Text = cuenta.saldo.ToString();
                 txtCuotaManejo.Text = cuenta.cuotaManejo.ToString();
                 txtTipoCuenta.Text = cuenta.tipoCuenta;
+
+                cuentaBuscada = cuenta.numeroCuenta;
+                btnActualizar.Enabled = true;
             }
             catch (FormatException)
             {
@@ -97,6 +79,14 @@ namespace POCCuentaCorriente
                     "Error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show(
+                    ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
@@ -110,60 +100,41 @@ namespace POCCuentaCorriente
 
         private async Task actualizarCuenta()
         {
+            // Seguridad extra: nunca actualizar sin haber buscado antes
+            if (cuentaBuscada == null)
+            {
+                MessageBox.Show(
+                    "Primero busque la cuenta que desea actualizar.",
+                    "Actualizar cuenta",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+
+                return;
+            }
+
             try
             {
-                int numeroCuenta = int.Parse(txtNumeroCuenta.Text);
-
-                var client = new GraphQLHttpClient(
-                    "http://localhost:8081/graphql",
-                    new SystemTextJsonSerializer());
-
                 var inputData = new CuentaCorrienteInput
                 {
-                    numeroCuenta = numeroCuenta,
+                    numeroCuenta = cuentaBuscada.Value,
                     titular = txtTitular.Text,
                     fechaApertura = txtFechaApertura.Text,
                     saldo = double.Parse(txtSaldo.Text),
-                    cuotaManejo = double.Parse(txtCuotaManejo.Text),
+                    
+                    cuotaManejo = string.IsNullOrWhiteSpace(txtCuotaManejo.Text)
+                        ? (double?)null
+                        : double.Parse(txtCuotaManejo.Text),
                     tipoCuenta = txtTipoCuenta.Text
                 };
 
-                var request = new GraphQLRequest
+                CuentaCorrienteData cuenta;
+
+                using (var servicio = new ServicioCuentaCorriente())
                 {
-                    Query = @"
-                        mutation actualizarCuenta($input: CuentaCorrienteInput!) {
-                            actualizarCuenta(input: $input) {
-                                numeroCuenta
-                                titular
-                                fechaApertura
-                                saldo
-                                cuotaManejo
-                                tipoCuenta
-                            }
-                        }
-                    ",
-                    Variables = new
-                    {
-                        input = inputData
-                    }
-                };
-
-                var response =
-                    await client.SendMutationAsync<ActualizarCuentaResponse>(request);
-
-                if (response.Errors != null && response.Errors.Length > 0)
-                {
-                    MessageBox.Show(
-                        response.Errors[0].Message,
-                        "Error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-
-                    return;
+                    cuenta = await servicio.ActualizarAsync(inputData);
                 }
 
-                if (response.Data == null ||
-                    response.Data.actualizarCuenta == null)
+                if (cuenta == null)
                 {
                     MessageBox.Show(
                         "No se encontró una cuenta con ese número.",
@@ -173,8 +144,6 @@ namespace POCCuentaCorriente
 
                     return;
                 }
-
-                var cuenta = response.Data.actualizarCuenta;
 
                 MessageBox.Show(
                     "Cuenta actualizada correctamente.\n\n" +
@@ -191,7 +160,15 @@ namespace POCCuentaCorriente
             catch (FormatException)
             {
                 MessageBox.Show(
-                    "Revise que el número de cuenta, saldo y cuota de manejo sean valores numéricos.",
+                    "Revise que el saldo y la cuota de manejo sean valores numéricos.",
+                    "Datos inválidos",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show(
+                    ex.Message,
                     "Datos inválidos",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);

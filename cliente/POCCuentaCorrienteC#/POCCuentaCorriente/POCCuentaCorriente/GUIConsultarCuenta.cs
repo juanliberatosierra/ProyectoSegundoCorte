@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using GraphQL;
-using GraphQL.Client.Http;
-using GraphQL.Client.Serializer.SystemTextJson;
 using POCCuentaCorriente.model;
+using POCCuentaCorriente.servicios;
 
 namespace POCCuentaCorriente
 {
@@ -27,45 +25,14 @@ namespace POCCuentaCorriente
             {
                 int numeroCuenta = int.Parse(txtNumeroCuenta.Text);
 
-                var client = new GraphQLHttpClient(
-                    "http://localhost:8081/graphql",
-                    new SystemTextJsonSerializer());
+                CuentaCorrienteData cuenta;
 
-                var request = new GraphQLRequest
+                using (var servicio = new ServicioCuentaCorriente())
                 {
-                    Query = @"
-                        query buscarCuenta($numeroCuenta: Int!) {
-                            buscarCuenta(numeroCuenta: $numeroCuenta) {
-                                numeroCuenta
-                                titular
-                                fechaApertura
-                                saldo
-                                cuotaManejo
-                                tipoCuenta
-                            }
-                        }
-                    ",
-                    Variables = new
-                    {
-                        numeroCuenta = numeroCuenta
-                    }
-                };
-
-                var response =
-                    await client.SendQueryAsync<ResponseCuentaCorriente>(request);
-
-                if (response.Errors != null && response.Errors.Length > 0)
-                {
-                    MessageBox.Show(
-                        response.Errors[0].Message,
-                        "Error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-
-                    return;
+                    cuenta = await servicio.BuscarAsync(numeroCuenta);
                 }
 
-                if (response.Data == null || response.Data.cuenta == null)
+                if (cuenta == null)
                 {
                     MessageBox.Show(
                         "No se encontró una cuenta con ese número.",
@@ -75,8 +42,6 @@ namespace POCCuentaCorriente
 
                     return;
                 }
-
-                var cuenta = response.Data.cuenta;
 
                 txtTitular.Text = cuenta.titular;
                 txtFechaApertura.Text = cuenta.fechaApertura;
@@ -91,6 +56,14 @@ namespace POCCuentaCorriente
                     "Error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show(
+                    ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {

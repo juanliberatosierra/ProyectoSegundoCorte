@@ -176,6 +176,7 @@
       <DependentUpon>GUIListarMovimientos.cs</DependentUpon>
     </Compile>
     <Compile Include="model\ResponseMovimientoBancario.cs" />
+    <Compile Include="servicios\ServicioCuentaCorriente.cs" />
     <Compile Include="servicios\ServicioMovimientoBancario.cs" />
     <Compile Include="servicios\ValidacionesMovimiento.cs" />
     <Compile Include="Program.cs" />
